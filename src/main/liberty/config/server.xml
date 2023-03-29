@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="${project.name}">
+
+	<featureManager>
+		<feature>microProfile-5.0</feature>
+		<feature>persistence-3.0</feature>
+		<feature>jndi-1.0</feature>
+		<feature>mail-2.0</feature>
+		<feature>transportSecurity-1.0</feature>
+		<feature>websocket-2.0</feature>
+
+	</featureManager>
+
+	<httpEndpoint id="defaultHttpEndpoint" httpPort="9081"
+		httpsPort="9444" />
+
+	<webApplication location="${project.name}.war"
+		contextRoot="${app.context.root}">
+		<classloader apiTypeVisibility="+third-party" />
+	</webApplication>
+	<mpMetrics authentication="false" />
+	<!-- This is the keystore that will be used by SSL and by JWT. -->
+	<keyStore id="defaultKeyStore" location="public.jks"
+		type="JKS" password="tmsolutionsssl" />
+
+	<ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore"
+		trustDefaultCerts="true" />
+
+
+
+	<!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped 
+		bean for inspection. -->
+	<mpJwt id="jwtUserConsumer" keyName="theKeyId"
+		audiences="targetService" issuer="${jwt.issuer}" />
+
+
+	<!-- <dataSource id="DefaultDataSource" jndiName="jdbc/database" -->
+	<!-- transactional="false"> -->
+	<!-- <jdbcDriver libraryRef="postgresql-library" /> -->
+	<!-- <properties serverName="209.126.5.217" portNumber="5433" -->
+	<!-- databaseName="fluincrbackend" user="postgres" -->
+	<!-- password="tmsolutions0000" /> -->
+	<!-- </dataSource> -->
+
+	<dataSource id="DefaultDataSource" transactional="false"
+		jndiName="jdbc/database">
+		<jdbcDriver libraryRef="postgresql-library" />
+		<properties.postgresql serverName="localhost"
+			portNumber="5433" databaseName="fluincrbackend" user="postgres"
+			password="tmsolutions0000" />
+	</dataSource>
+
+
+
+
+	<library id="postgresql-library">
+		<file name="${server.config.dir}/postgresql-42.2.8.jar" />
+	</library>
+
+
+	<!-- <mailSession> -->
+	<!-- <mailSessionID>gmailSMTPSession</mailSessionID> -->
+	<!-- <jndiName>mail/laffegoMailSession</jndiName> -->
+	<!-- <description>My Gmail SMTP Session</description> -->
+	<!-- <storeProtocol>imaps</storeProtocol> -->
+	<!-- <transportProtocol>smtp</transportProtocol> -->
+	<!-- <host>mail.laffego.com</host> -->
+	<!-- <user>laffego@laffego.com</user> -->
+	<!-- <password>Laffe2020*</password> -->
+	<!-- <from>laffego@laffego.com</from> -->
+	<!-- <property name="mail.imap.host" value="mail.laffego.com" /> -->
+	<!-- <property name="mail.smtp.port" value="587" /> -->
+	<!-- <property name="mail.smtp.auth" value="true" /> -->
+	<!-- <property name="mail.smtp.starttls.enable" value="true" /> -->
+	<!-- </mailSession> -->
+
+	<mailSession>
+		<mailSessionID>gmailSMTPSession</mailSessionID>
+		<jndiName>mail/laffegoMailSession</jndiName>
+		<description>My Gmail SMTP Session</description>
+		<storeProtocol>imaps</storeProtocol>
+		<transportProtocol>smtp</transportProtocol>
+		<host>smtp.gmail.com</host>
+		<user>laffegoapp@gmail.com</user>
+		<password>ptlwsladltnmidek</password>
+		<from>laffegoapp@gmail.com</from>
+		<property name="mail.imap.host" value="smtp.gmail.com" />
+		<property name="mail.smtp.port" value="587" />
+		<property name="mail.smtp.auth" value="true" />
+		<property name="mail.smtp.starttls.enable" value="true" />
+	</mailSession>
+
+
+	<!-- <variable name="url.administrativa" -->
+	<!-- value="https://staging.laffego.com/" /> -->
+
+	<variable name="url_administrativa"
+		value="https://staging.laffego.com/" />
+
+
+</server>
