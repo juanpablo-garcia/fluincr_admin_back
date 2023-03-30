@@ -13,8 +13,8 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<jta-data-source>jdbc/database</jta-data-source>
-		<jar-file>../../lib/model-0.0.1-SNAPSHOT.jar</jar-file>
-		<!-- <jar-file>lib/model-0.0.1-SNAPSHOT.jar</jar-file> -->
+		<!-- <jar-file>../../lib/model-0.0.1-SNAPSHOT.jar</jar-file> -->
+		<jar-file>lib/model-0.0.1-SNAPSHOT.jar</jar-file>
 
 		<!-- <properties> -->
 		<!-- <property name="eclipselink.ddl-generation" -->
@@ -23,14 +23,14 @@
 
 		<properties>
 
-			<property name="jakarta.persistence.jdbc.driver"
-				value="org.postgresql.Driver" />
-			<property name="jakarta.persistence.jdbc.url"
-				value="jdbc:postgresql://localhost:5433/fluincrbackend" />
-			<property name="jakarta.persistence.jdbc.user"
-				value="postgres" />
-			<property name="jakarta.persistence.jdbc.password"
-				value="tmsolutions0000" />
+			<!-- <property name="jakarta.persistence.jdbc.driver" -->
+			<!-- value="org.postgresql.Driver" /> -->
+			<!-- <property name="jakarta.persistence.jdbc.url" -->
+			<!-- value="jdbc:postgresql://localhost:5433/fluincrbackend" /> -->
+			<!-- <property name="jakarta.persistence.jdbc.user" -->
+			<!-- value="postgres" /> -->
+			<!-- <property name="jakarta.persistence.jdbc.password" -->
+			<!-- value="tmsolutions0000" /> -->
 			<!-- <property name="jakarta.persistence.schema-generation.database.action" 
 				value="create"/> -->
 

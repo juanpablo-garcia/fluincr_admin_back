@@ -2,12 +2,15 @@
 <server description="${project.name}">
 
 	<featureManager>
+		<!-- <feature>jakartaee-8.0</feature> -->
+		<!-- <feature>microProfile-4.1</feature> -->
+
 		<feature>microProfile-5.0</feature>
 		<feature>persistence-3.0</feature>
 		<feature>jndi-1.0</feature>
-		<feature>mail-2.0</feature>
 		<feature>transportSecurity-1.0</feature>
 		<feature>websocket-2.0</feature>
+
 
 	</featureManager>
 
@@ -58,44 +61,10 @@
 	</library>
 
 
-	<!-- <mailSession> -->
-	<!-- <mailSessionID>gmailSMTPSession</mailSessionID> -->
-	<!-- <jndiName>mail/laffegoMailSession</jndiName> -->
-	<!-- <description>My Gmail SMTP Session</description> -->
-	<!-- <storeProtocol>imaps</storeProtocol> -->
-	<!-- <transportProtocol>smtp</transportProtocol> -->
-	<!-- <host>mail.laffego.com</host> -->
-	<!-- <user>laffego@laffego.com</user> -->
-	<!-- <password>Laffe2020*</password> -->
-	<!-- <from>laffego@laffego.com</from> -->
-	<!-- <property name="mail.imap.host" value="mail.laffego.com" /> -->
-	<!-- <property name="mail.smtp.port" value="587" /> -->
-	<!-- <property name="mail.smtp.auth" value="true" /> -->
-	<!-- <property name="mail.smtp.starttls.enable" value="true" /> -->
-	<!-- </mailSession> -->
-
-	<mailSession>
-		<mailSessionID>gmailSMTPSession</mailSessionID>
-		<jndiName>mail/laffegoMailSession</jndiName>
-		<description>My Gmail SMTP Session</description>
-		<storeProtocol>imaps</storeProtocol>
-		<transportProtocol>smtp</transportProtocol>
-		<host>smtp.gmail.com</host>
-		<user>laffegoapp@gmail.com</user>
-		<password>ptlwsladltnmidek</password>
-		<from>laffegoapp@gmail.com</from>
-		<property name="mail.imap.host" value="smtp.gmail.com" />
-		<property name="mail.smtp.port" value="587" />
-		<property name="mail.smtp.auth" value="true" />
-		<property name="mail.smtp.starttls.enable" value="true" />
-	</mailSession>
 
 
-	<!-- <variable name="url.administrativa" -->
-	<!-- value="https://staging.laffego.com/" /> -->
 
-	<variable name="url_administrativa"
-		value="https://staging.laffego.com/" />
+
 
 
 </server>
