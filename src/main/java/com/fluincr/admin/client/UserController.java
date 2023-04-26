@@ -1,5 +1,6 @@
 package com.fluincr.admin.client;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,13 +10,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.MultiIdentifierLoadAccess;
+import org.hibernate.Session;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.fluincr.admin.utilidades.UtilidadesAdmin;
 import com.fluincr.admin.utilidades.UtilidadesJWT;
 
 import co.com.tmsolutions.fluincr.model.Colaboration;
-import co.com.tmsolutions.fluincr.model.Company;
 import co.com.tmsolutions.fluincr.model.EnumIFStatus;
 import co.com.tmsolutions.fluincr.model.Influencer;
 import co.com.tmsolutions.fluincr.model.LanguageInfluincr;
@@ -129,7 +131,7 @@ public class UserController {
 		Optional<Users> optult = em.createQuery(sql, Users.class).setParameter("id", id).getResultList().stream()
 				.findFirst();
 		if (optult.isPresent()) {
-			String sqlpriv = " select distinct   rol.nombre as rol,  banda.nombre as banda,   form.nombre as formulario,rol.icono as ic_rol,  banda.icono as ic_banda,   form.icono as ic_formulario  from rol_grupo_de_seguridad_usuario  inner join rol_grupo_de_seguridad grupo on grupo.id = grupo_de_seguridad   inner join rol_privilegio_grupo_de_seguridad rl on rl.grupodeseguridad = grupo.id inner join rol_formulario form on form.id = rl.formulario_id inner join rol_banda banda on banda.id = form.banda inner join rol_role rol on rol.id = banda.role  where usuario = %s order by rol,banda,formulario";
+			String sqlpriv = " select distinct   rol.nombre as rol,  banda.nombre as banda,   form.nombre as formulario,rol.icono as ic_rol,  banda.icono as ic_banda,   form.icono as ic_formulario,form.orden as orden  from rol_grupo_de_seguridad_usuario  inner join rol_grupo_de_seguridad grupo on grupo.id = grupo_de_seguridad   inner join rol_privilegio_grupo_de_seguridad rl on rl.grupodeseguridad = grupo.id inner join rol_formulario form on form.id = rl.formulario_id inner join rol_banda banda on banda.id = form.banda inner join rol_role rol on rol.id = banda.role  where usuario = %s order by rol,banda,orden";
 			sqlpriv = String.format(sqlpriv, id);
 			List<Object[]> ls = em.createNativeQuery(sqlpriv).getResultList();
 			return Response.status(Status.OK).entity(ls).build();
@@ -288,16 +290,24 @@ public class UserController {
 
 		BigDecimal id = (BigDecimal) map.get("user_id");
 		Users usuario = em.find(Users.class, id.longValue());
-		List<Long> roles_id = (List<Long>) map.get("roles_id");
+		List<BigDecimal> roles_id = (List<BigDecimal>) map.get("roles_id");
 		if (roles_id != null) {
 
 			System.out.println(roles_id);
 
 			em.createQuery("delete from RolGrupoDeSeguridadUsuario r where r.usuario = ?1").setParameter(1, usuario)
 					.executeUpdate();
-			List<RolGrupoDeSeguridad> gruposDeseguridad = em
-					.createQuery("select c from RolGrupoDeSeguridad c where c.id in :ids").setParameter("ids", roles_id)
-					.getResultList();
+
+			Session session = em.unwrap(Session.class);
+
+			MultiIdentifierLoadAccess<RolGrupoDeSeguridad> multiLoadAccess = session
+					.byMultipleIds(RolGrupoDeSeguridad.class);
+			List<Long> roles_id_long = roles_id.stream().map(o -> o.longValue()).collect(Collectors.toList());
+			List<RolGrupoDeSeguridad> gruposDeseguridad = multiLoadAccess.multiLoad(roles_id_long);
+
+//			List<RolGrupoDeSeguridad> gruposDeseguridad = em
+//					.createQuery("select c from RolGrupoDeSeguridad c where c.id IN :ids").setParameter("ids", roles_id)
+//					.getResultList();
 			for (RolGrupoDeSeguridad gs : gruposDeseguridad) {
 				RolGrupoDeSeguridadUsuario r = new RolGrupoDeSeguridadUsuario();
 				r.setUsuario(usuario);
@@ -358,7 +368,5 @@ public class UserController {
 		return Response.status(Status.OK).entity(map).build();
 
 	}
-	
-
 
 }

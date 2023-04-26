@@ -237,7 +237,6 @@ public class GenericController {
 		Class cl;
 		try {
 			cl = Class.forName(clase);
-
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery criteriaQuery = cb.createQuery(cl);
 			Root root = criteriaQuery.from(cl);
@@ -255,6 +254,7 @@ public class GenericController {
 				result = em.createQuery(criteriaQuery).getResultList();
 
 			}
+			System.out.println(result.size() + " *****************************");
 			return Response.status(Status.OK).entity(result).build();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
