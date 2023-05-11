@@ -24,11 +24,12 @@ insert into rol_formulario (id,nombre,banda,deleted,icono,orden) values
 (6,'staticpage',1,'0','fa fa-dot-circle-o',7),
 (7,'cuponcode',1,'0','fa fa-dot-circle-o',8),
 (8,'services',1,'0','fa fa-dot-circle-o',9),
-(9,'colaboration',1,'0','fa fa-dot-circle-o'),
+(9,'colaboration',1,'0','fa fa-dot-circle-o',10),
 (10,'emailtemplates',1,'0','fa fa-dot-circle-o',6),
 (11,'colaboration_report',2,'0','fa fa-dot-circle-o',10),
 (12,'business_report',2,'0','fa fa-dot-circle-o',11),
-(13,'influencer_report',2,'0','fa fa-dot-circle-o',12);
+(13,'influencer_report',2,'0','fa fa-dot-circle-o',12),
+(14,'fluincrconfiguration',1,'0','fa fa-dot-circle-o',0);
 
   
 
@@ -155,7 +156,5 @@ cast(followers ->> 'twitter' as int) as followers_twitter
 
 from company comp
 left outer join country pais on pais.id = country;
- 
 
-
-
+insert into fluincrconfiguration (id,deleted,company_rate,paypal_rate,refund_rate) values (1,'0',5,7,10);
