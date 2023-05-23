@@ -113,9 +113,18 @@ coalesce(item.discount,0.0) as item_discount,
 item.price - coalesce(item.discount,0.0) as item_total,
 
  cast(item.title as jsonb) ->> 'name' as "item_name",
-(CASE item.status when 0 then 'created' when 1 then 'Upload content' when 2 then 'For approval' when 3 then 'Publish' when 4 then 'Dispute window' when 5 then 'On hold'
-when 6 then 'Complete' when 7 then 'Cancelled' when 8 then 'Other'
- end) as "item_status"
+( WHEN 0 THEN 'creado'
+            WHEN 1 THEN 'aceptacion_pendiente'
+            WHEN 2 THEN 'declinado'
+            WHEN 3 THEN 'sube_contenido'
+            WHEN 4 THEN 'aprueba_contenido'
+            WHEN 5 THEN 'publica_contenido'
+            WHEN 6 THEN 'ventan_de_disputa'
+            WHEN 7 THEN 'en_espera'
+            WHEN 8 THEN 'terminado'
+	    WHEN 9 THEN 'cancelado'
+	    ELSE NULL
+            END AS item_status) as "item_status"
  from item
 inner join colaboration col on col.id = item.colaboration
 left outer join company comp on comp.id = col.company
